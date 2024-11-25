@@ -98,7 +98,7 @@ body {
   }
   
   .h-650 {
-    height: 690px !important;
+    height: 730px !important;
   }
 }
 
@@ -231,7 +231,7 @@ body {
   height: 40px;
   background: #fff;
   padding: 20px;
-  font-size: 18px;
+  font-size: 1.25rem;
   font-weight: 400;
   border-radius: 8px;
   align-items: center;
@@ -259,9 +259,8 @@ body {
 
 .select-menu .options .option {
   display: flex;
-  height: 55px;
   cursor: pointer;
-  padding: 0 16px;
+  padding: 10px 16px;
   border-radius: 8px;
   align-items: center;
   background: #fff;
@@ -272,17 +271,17 @@ body {
 }
 
 .select-menu .options .option i {
-  font-size: 25px;
+  font-size: 1.5rem;
   margin-right: 12px;
 }
 
 .select-menu .options .option .option-text {
-  font-size: 18px;
+  font-size: 1.25rem;
   color: #333;
 }
 
 .select-btn i {
-  font-size: 25px;
+  font-size: 1.5rem;
   transition: 0.3s;
 }
 
