@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <div class="home-bg-div">
-      <img class="home-bg" src="./assets/img/home_bg.jpg" />
-      <div class="gradient"></div>
-    </div>
-    <div class="main-div">
+  <div class="bg-img">
+    <div class="main-div" 
+      :class="{ 'focus-year': focusedDropdown == 'year' && isActiveDropdown, 'focus-make': focusedDropdown == 'make' && isActiveDropdown, 'focus-model': focusedDropdown == 'model' && isActiveDropdown }">
       <div class="glossy-container"
         :class="{ 'h-400': showMakeDropdown, 'h-560': showModelDropdown, 'h-650': showResult }">
+
+        <!-- Title -->
         <p class="home-title">Find any car here</p>
+
+        <!-- Year selection -->
         <div class="first-dropdown-div">
           <p class="dropdown-inst">Select the year :</p>
           <Dropdown
@@ -15,9 +16,13 @@
             :year-select="true"
             :reset-selection="false"
             :dropdown-placeholder="'Select the year'"
+            :dropdown-name="'year'"
             @year-selected="handleYearSelection"
+            @dropdown-status="dropdownStatus"
           />
         </div>
+
+        <!-- Make selction -->
         <transition name="dropdown-fade">
           <div v-if="showMakeDropdown" class="dropdown-div">
             <p class="dropdown-inst">Select the make :</p>
@@ -27,10 +32,14 @@
               v-if="showMakeDropdown"
               :reset-selection="resetMakeDropdown"
               :dropdown-placeholder="'Select the make'"
+              :dropdown-name="'make'"
               @make-selected="handleMakeSelection"
+              @dropdown-status="dropdownStatus"
             />
           </div>
         </transition>
+
+        <!-- Model selection -->
         <transition name="dropdown-fade">
           <div v-if="showModelDropdown" class="dropdown-div">
             <p class="dropdown-inst">Select the model :</p>
@@ -40,10 +49,14 @@
               v-if="showModelDropdown"
               :reset-selection="resetModelDropdown"
               :dropdown-placeholder="'Select the model'"
+              :dropdown-name="'model'"
               @model-selected="handleModelSelection"
+              @dropdown-status="dropdownStatus"
             />
           </div>
         </transition>
+
+        <!-- Result -->
         <transition name="dropdown-fade">
           <div v-if="showResult">
             <p class="result-title">
@@ -77,14 +90,21 @@ export default {
       resetMakeDropdown: false,
       resetModelDropdown: false,
       showResult: false,
-      resulr:''
+      result:'',
+      isActiveDropdown: false,
+      focusedDropdown: ''
     };
   },
 
   methods: {
-    handleYearSelection(url, year) {
+    dropdownStatus(status, dropdown) {
+      this.isActiveDropdown = status;
+      this.focusedDropdown = dropdown;
+    },
+
+    handleYearSelection(year) {
       // Update the make URL and reset other dropdowns
-      this.makeUrl = url;
+      this.makeUrl = `https://new.api.nexusautotransport.com/api/vehicles/makes?year=${year}`;
       this.selectedYear = year;
       this.showMakeDropdown = true;
       this.showModelDropdown = false;
@@ -100,6 +120,7 @@ export default {
     },
 
     handleMakeSelection(make) {
+      // Update the model URL and reset other dropdowns
       this.selectedMake = make;
       this.modelUrl = `https://new.api.nexusautotransport.com/api/vehicles/models?year=${this.selectedYear}&make=${make}`;
       this.showModelDropdown = true;
@@ -112,6 +133,7 @@ export default {
     },
 
     handleModelSelection(model) {
+      // Make the result based on selected year, make, model
       this.selectedModel = model;
       this.showResult = true;
       this.result = `${this.selectedYear} ${this.selectedMake} ${this.selectedModel}`;

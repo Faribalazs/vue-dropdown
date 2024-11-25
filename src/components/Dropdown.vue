@@ -63,6 +63,10 @@ export default {
       type: String,
       required: true,
     },
+    dropdownName: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
@@ -89,9 +93,14 @@ export default {
         this.resetDropdown();
       }
     },
+
+    isActive(newValue) {
+      this.$emit("dropdown-status", newValue, this.dropdownName);
+    }
   },
 
   methods: {
+    //Fetch data from API
     async fetchOptions() {
       try {
         const response = await axios.get(this.url, {
@@ -116,15 +125,14 @@ export default {
     matchesSearch(option) {
       // Safely handle cases where optionText might not return a valid string
       const query = this.searchQuery.toLowerCase();
-      const text = this.optionText(option).toLowerCase(); // Convert optionText to lowercase
+      const text = this.optionText(option).toLowerCase();
       return text.includes(query);
     },
 
     selectOption(option) {
       // Year select handle
       if (this.yearSelect) {
-        const url = `https://new.api.nexusautotransport.com/api/vehicles/makes?year=${option}`;
-        this.$emit("year-selected", url, option);
+        this.$emit("year-selected", option);
         this.selectedOption = option;
 
         // Make select handle
@@ -149,6 +157,7 @@ export default {
     },
 
     handleClickOutside(event) {
+      //Close the dropdown when clicked outside the dropdown
       if (!this.$el.contains(event.target)) {
         this.isActive = false;
       }
