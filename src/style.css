@@ -47,7 +47,7 @@ body {
   transition: all .7s;
 }
 
-@media screen and (max-height: 1065px) {
+@media screen and (max-height: 990px) {
   .focus-year {
     transform: translate(-0%, -20%);
   }
@@ -74,7 +74,7 @@ body {
   -webkit-backdrop-filter: blur(6.3px);
   transition: height .7s;
   height: 230px;
-  margin: 100px 0px;
+  margin: 20px 0px;
 }
 
 @media screen and (max-width: 650px) {
@@ -83,6 +83,10 @@ body {
     margin-top: 20px;
     margin: 20px;
     height: 350px;
+  }
+
+  .home-title {
+    font-size: 3rem !important;
   }
 
   .h-400 {
@@ -136,9 +140,6 @@ body {
 }
 
 @media screen and (max-width: 450px) {
-  .home-title {
-    font-size: 3rem !important;
-  }
 
   .dropdown-inst {
     font-size: 1.2rem !important;

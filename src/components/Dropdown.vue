@@ -144,6 +144,14 @@ export default {
       } else if (this.modelSelect) {
         this.$emit("model-selected", option.model);
         this.selectedOption = option.model;
+
+        //Scroll to bottom to view the result
+        setTimeout(function() {
+          window.scrollTo({
+              top: document.body.scrollHeight,
+              behavior: "smooth"
+          });
+        }, 400);
       }
       this.isActive = false;
     },
